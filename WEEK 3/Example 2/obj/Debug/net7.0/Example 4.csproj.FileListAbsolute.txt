@@ -1,0 +1,15 @@
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\bin\Debug\net7.0\Example 4.exe
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\bin\Debug\net7.0\Example 4.deps.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\bin\Debug\net7.0\Example 4.runtimeconfig.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\bin\Debug\net7.0\Example 4.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\bin\Debug\net7.0\Example 4.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\Example 4.csproj.AssemblyReference.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\Example 4.GeneratedMSBuildEditorConfig.editorconfig
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\Example 4.AssemblyInfoInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\Example 4.AssemblyInfo.cs
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\Example 4.csproj.CoreCompileInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\Example 4.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\refint\Example 4.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\Example 4.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\Example 4.genruntimeconfig.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 4\obj\Debug\net7.0\ref\Example 4.dll

@@ -1,0 +1,29 @@
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.exe
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.deps.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.runtimeconfig.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.GeneratedMSBuildEditorConfig.editorconfig
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.AssemblyInfoInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.AssemblyInfo.cs
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.csproj.CoreCompileInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\refint\Example 5.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.genruntimeconfig.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 5\obj\Debug\net7.0\ref\Example 5.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.exe
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.deps.json
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.runtimeconfig.json
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\bin\Debug\net7.0\Example 5.pdb
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.csproj.AssemblyReference.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.AssemblyInfoInputs.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.AssemblyInfo.cs
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.csproj.CoreCompileInputs.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\refint\Example 5.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.pdb
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\Example 5.genruntimeconfig.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 5\obj\Debug\net7.0\ref\Example 5.dll

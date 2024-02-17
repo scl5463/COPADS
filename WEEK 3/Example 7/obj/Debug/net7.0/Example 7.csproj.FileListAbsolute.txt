@@ -1,0 +1,43 @@
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.GeneratedMSBuildEditorConfig.editorconfig
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.AssemblyInfoInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.AssemblyInfo.cs
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.csproj.CoreCompileInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.exe
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.deps.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.runtimeconfig.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\refint\Example 7.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.genruntimeconfig.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 3\Example 7\obj\Debug\net7.0\ref\Example 7.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.exe
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.deps.json
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.runtimeconfig.json
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.pdb
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.csproj.AssemblyReference.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.AssemblyInfoInputs.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.AssemblyInfo.cs
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.csproj.CoreCompileInputs.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\refint\Example 7.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.pdb
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.genruntimeconfig.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 3\Example 7\obj\Debug\net7.0\ref\Example 7.dll
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.exe
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.deps.json
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.runtimeconfig.json
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.dll
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\bin\Debug\net7.0\Example 7.pdb
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.AssemblyInfoInputs.cache
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.AssemblyInfo.cs
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.csproj.CoreCompileInputs.cache
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.dll
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\refint\Example 7.dll
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.pdb
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\Example 7.genruntimeconfig.cache
+C:\Users\scott\OneDrive\Desktop\COPADS\WEEK 3\Example 7\obj\Debug\net7.0\ref\Example 7.dll

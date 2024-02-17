@@ -1,0 +1,44 @@
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.exe
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.deps.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.runtimeconfig.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.csproj.AssemblyReference.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.GeneratedMSBuildEditorConfig.editorconfig
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.AssemblyInfoInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.AssemblyInfo.cs
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.csproj.CoreCompileInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\refint\Accessing_Files.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.genruntimeconfig.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 2\Accessing_Files\obj\Debug\net7.0\ref\Accessing_Files.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.exe
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.deps.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.runtimeconfig.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\bin\Debug\net7.0\Accessing_Files.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.GeneratedMSBuildEditorConfig.editorconfig
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.AssemblyInfoInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.AssemblyInfo.cs
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.csproj.CoreCompileInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\refint\Accessing_Files.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\Accessing_Files.genruntimeconfig.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2024\WEEK 2\Accessing_Files\obj\Debug\net7.0\ref\Accessing_Files.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\bin\Debug\net7.0\Accessing_Files.exe
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\bin\Debug\net7.0\Accessing_Files.deps.json
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\bin\Debug\net7.0\Accessing_Files.runtimeconfig.json
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\bin\Debug\net7.0\Accessing_Files.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\bin\Debug\net7.0\Accessing_Files.pdb
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\Accessing_Files.csproj.AssemblyReference.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\Accessing_Files.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\Accessing_Files.AssemblyInfoInputs.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\Accessing_Files.AssemblyInfo.cs
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\Accessing_Files.csproj.CoreCompileInputs.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\Accessing_Files.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\refint\Accessing_Files.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\Accessing_Files.pdb
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\Accessing_Files.genruntimeconfig.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 1\Accessing_Files\obj\Debug\net7.0\ref\Accessing_Files.dll

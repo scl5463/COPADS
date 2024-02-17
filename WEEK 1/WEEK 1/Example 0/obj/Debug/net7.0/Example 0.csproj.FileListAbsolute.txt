@@ -1,0 +1,15 @@
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\bin\Debug\net7.0\Example 0.exe
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\bin\Debug\net7.0\Example 0.deps.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\bin\Debug\net7.0\Example 0.runtimeconfig.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\bin\Debug\net7.0\Example 0.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\bin\Debug\net7.0\Example 0.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\Example 0.csproj.AssemblyReference.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\Example 0.GeneratedMSBuildEditorConfig.editorconfig
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\Example 0.AssemblyInfoInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\Example 0.AssemblyInfo.cs
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\Example 0.csproj.CoreCompileInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\Example 0.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\refint\Example 0.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\Example 0.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\Example 0.genruntimeconfig.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\SPRING 2225\WEEK 2\Example 0\obj\Debug\net7.0\ref\Example 0.dll

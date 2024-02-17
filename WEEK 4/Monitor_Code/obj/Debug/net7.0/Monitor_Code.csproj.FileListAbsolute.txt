@@ -1,0 +1,29 @@
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.exe
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.deps.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.runtimeconfig.json
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.GeneratedMSBuildEditorConfig.editorconfig
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.AssemblyInfoInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.AssemblyInfo.cs
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.csproj.CoreCompileInputs.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\refint\Monitor_Code.dll
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.pdb
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.genruntimeconfig.cache
+D:\Profiles\toivcs\Desktop\RIT\CSCI 251\FALL 2023\WEEK 4\Monitor_Code\obj\Debug\net7.0\ref\Monitor_Code.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.exe
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.deps.json
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.runtimeconfig.json
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\bin\Debug\net7.0\Monitor_Code.pdb
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.csproj.AssemblyReference.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.AssemblyInfoInputs.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.AssemblyInfo.cs
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.csproj.CoreCompileInputs.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\refint\Monitor_Code.dll
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.pdb
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\Monitor_Code.genruntimeconfig.cache
+C:\Users\toivcs\Desktop\SPRING 2024\WEEK 4\Monitor_Code\obj\Debug\net7.0\ref\Monitor_Code.dll
