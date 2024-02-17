@@ -1,0 +1,40 @@
+~ > dotnet run
+Usage: du [-s] [-d] [-b] <path>
+Summarize disk usage of the set of FILEs, recursively for directories.
+
+You MUST specify one of the parameters, -s, -d, or -b
+-s       Run in single threaded mode
+-d       Run in parallel mode (uses all available processors)
+-b       Run in both single threaded and parallel mode.
+         Runs parallel follow by sequential mode
+
+
+~ > dotnet run -b ~/Dropbox/Teaching
+Directory '/Users/jsb/Dropbox/Teaching':
+
+Parallel Calculated in: 12.4892146s
+81,670 folders, 350,537 files, 9,700,031,836 bytes
+200 image files, 4, 224,4340 bytes
+
+Sequential Calculated in: 61.8529021s
+81,670 folders, 350,537 files, 9,700,031,836 bytes
+200 image files, 4, 224,4340 bytes
+
+
+~ > dotnet run -c ~/Dropbox/Teaching
+Usage: du [-s] [-d] [-b] <path>
+Summarize disk usage of the set of FILEs, recursively for directories.
+
+You MUST specify one of the parameters, -s, -d, or -b
+-s       Run in single threaded mode
+-d       Run in parallel mode (uses all available processors)
+-b       Run in both single threaded and parallel mode.
+         Runs parallel follow by sequential mode
+
+
+~ > dotnet run -d ~/Dropbox/Learning
+Directory '/Users/jsb/Dropbox/Learning':
+
+Parallel Calculated in: 12.5941495s
+81,682 folders, 350,556 files, 9,700,157,785 bytes
+No image files found in the directory
