@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Project1
 {
@@ -19,28 +20,66 @@ namespace Project1
             ".PNG"
         };
 
+        static object tasklock = new object();
+
+        static string error_message =
+            "Usage: du [-s] [-d] [-b] <path>\n"
+            + "Summarize disk usage of the set of FILEs, recursively for directories.\n\n"
+            + "You MUST specify one of the parameters, -s, -d, or -b\n"
+            + "-s       Run in single threaded mode\n"
+            + "-d       Run in parallel mode (uses all available processors)\n"
+            + "-b       Run in both single threaded and parallel mode.\n"
+            + "         Runs parallel follow by sequential mode\n";
+
         static void Main(string[] args)
         {
             Counter counter = new Counter();
 
             try
             {
+                if (args.Length < 3)
+                {
+                    throw new Exception(error_message);
+                }
                 if (args.Contains("-b"))
                 {
-                    Console.WriteLine("-b is Both");
+                    counter.Reset();
+                    Console.WriteLine("Directory `{0}`", args[2]);
+
+                    var stopwatch = Stopwatch.StartNew();
+                    ParallelDFS(args[2], counter);
+                    string ts = stopwatch.Elapsed.TotalSeconds.ToString();
+
+                    Console.WriteLine("Parallel Calculated in: {0}s", ts);
+                    counter.Print();
+
+                    counter.Reset();
+                    Stopwatch.StartNew();
+                    SingleDFS(args[2], counter);
+                    string singleTime = stopwatch.Elapsed.TotalSeconds.ToString();
+
+                    Console.WriteLine("\nSequential Calculated in: {0}s", singleTime);
+                    counter.Print();
                 }
                 else if (args.Contains("-d"))
                 {
-                    Console.WriteLine("-d is Parallel");
+                    counter.Reset();
+                    Console.WriteLine("Directory `{0}`", args[2]);
+
+                    var stopwatch = Stopwatch.StartNew();
+                    ParallelDFS(args[2], counter);
+                    string ts = stopwatch.Elapsed.TotalSeconds.ToString();
+
+                    Console.WriteLine("Parallel Calculated in: {0}s", ts);
+                    counter.Print();
                 }
                 else if (args.Contains("-s"))
                 {
-                    string path = args.Length >= 3 ? args[2] : "C:\\";
                     counter.Reset();
-                    Console.WriteLine("Directory `{0}`", path);
+                    Console.WriteLine("Directory `{0}`", args[2]);
 
                     var stopwatch = Stopwatch.StartNew();
-                    SingleDFS(path, counter);
+                    SingleDFS(args[2], counter);
                     string ts = stopwatch.Elapsed.TotalSeconds.ToString();
 
                     Console.WriteLine("Sequential Calculated in: {0}s", ts);
@@ -48,29 +87,13 @@ namespace Project1
                 }
                 else
                 {
-                    Console.WriteLine(
-                        "Usage: du [-s] [-d] [-b] <path>\n"
-                            + "Summarize disk usage of the set of FILEs, recursively for directories.\n\n"
-                            + "You MUST specify one of the parameters, -s, -d, or -b\n"
-                            + "-s       Run in single threaded mode\n"
-                            + "-d       Run in parallel mode (uses all available processors)\n"
-                            + "-b       Run in both single threaded and parallel mode.\n"
-                            + "         Runs parallel follow by sequential mode\n"
-                    );
+                    Console.WriteLine(error_message);
                 }
                 ;
             }
             catch
             {
-                Console.WriteLine(
-                    "Usage: du [-s] [-d] [-b] <path>\n"
-                        + "Summarize disk usage of the set of FILEs, recursively for directories.\n\n"
-                        + "You MUST specify one of the parameters, -s, -d, or -b\n"
-                        + "-s       Run in single threaded mode\n"
-                        + "-d       Run in parallel mode (uses all available processors)\n"
-                        + "-b       Run in both single threaded and parallel mode.\n"
-                        + "         Runs parallel follow by sequential mode\n"
-                );
+                Console.WriteLine(error_message);
             }
             ;
         }
@@ -79,27 +102,47 @@ namespace Project1
         {
             try
             {
-                // for each obj in directory
-                //      obj == folder
-                //           call SingleDFS()
-                //           call Counter Class to update folder count
-                //      obj == file
-                //           if image
-                //              call Counter to update image_count, image_bytes
-                //           call Counter class to update file_count, total
-                //
+                List<Task> tasks = new List<Task>();
+                foreach (string fi in Directory.GetFileSystemEntries(dir))
+                {
+                    if (Directory.Exists(fi))
+                    {
+                        lock (tasklock)
+                        {
+                            counter.UpdateFolderCount(1);
+                        }
+                        tasks.Add(Task.Run(() => ParallelDFS(fi, counter)));
+                    }
+                    if (File.Exists(fi))
+                    {
+                        FileInfo fileInfo = new FileInfo(fi);
+                        if (ImageExtensions.Contains(Path.GetExtension(fi).ToUpper()))
+                        {
+                            lock (tasklock)
+                            {
+                                counter.UpdateImageCount(1);
+                                counter.UpdateImageByteCount(fileInfo.Length);
+                            }
+                        }
+                        lock (tasklock)
+                        {
+                            counter.UpdateTotalBytesCount(fileInfo.Length);
+                            counter.UpdateFileCount(1);
+                        }
+                    }
+                }
+                Task.WaitAll(tasks.ToArray());
+            }
+            catch (UnauthorizedAccessException)
+            {
+                lock (tasklock)
+                {
+                    counter.UpdateUnauthorizedCount(1);
+                }
             }
             catch
             {
-                Console.WriteLine(
-                    "Usage: du [-s] [-d] [-b] <path>\n"
-                        + "Summarize disk usage of the set of FILEs, recursively for directories.\n\n"
-                        + "You MUST specify one of the parameters, -s, -d, or -b\n"
-                        + "-s       Run in single threaded mode\n"
-                        + "-d       Run in parallel mode (uses all available processors)\n"
-                        + "-b       Run in both single threaded and parallel mode.\n"
-                        + "         Runs parallel follow by sequential mode\n"
-                );
+                Console.WriteLine(error_message);
             }
             ;
         }
@@ -134,15 +177,7 @@ namespace Project1
             }
             catch
             {
-                Console.WriteLine(
-                    "Usage: du [-s] [-d] [-b] <path>\n"
-                        + "Summarize disk usage of the set of FILEs, recursively for directories.\n\n"
-                        + "You MUST specify one of the parameters, -s, -d, or -b\n"
-                        + "-s       Run in single threaded mode\n"
-                        + "-d       Run in parallel mode (uses all available processors)\n"
-                        + "-b       Run in both single threaded and parallel mode.\n"
-                        + "         Runs parallel follow by sequential mode\n"
-                );
+                Console.WriteLine(error_message);
             }
             ;
         }
