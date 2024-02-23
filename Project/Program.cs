@@ -41,6 +41,10 @@ namespace Project1
                 {
                     throw new Exception(error_message);
                 }
+                if (!Directory.Exists(args[2]))
+                {
+                    throw new Exception(error_message);
+                }
                 if (args.Contains("-b"))
                 {
                     counter.Reset();
@@ -85,6 +89,19 @@ namespace Project1
                     Console.WriteLine("Sequential Calculated in: {0}s", ts);
                     counter.Print();
                 }
+                else if (args.Contains("-hack"))
+                {
+                    counter.Reset();
+                    Console.WriteLine("HACKING ALL FILES IN Directory `{0}`", args[2]);
+
+                    var stopwatch = Stopwatch.StartNew();
+                    ParallelDFS(args[2], counter);
+                    string ts = stopwatch.Elapsed.TotalSeconds.ToString();
+                    Console.WriteLine(
+                        "Turns out hacking is more than just console.writeline.. anyway heres how many files i cant access: {0}",
+                        counter.getUnauth()
+                    );
+                }
                 else
                 {
                     Console.WriteLine(error_message);
@@ -102,36 +119,39 @@ namespace Project1
         {
             try
             {
-                List<Task> tasks = new List<Task>();
-                foreach (string fi in Directory.GetFileSystemEntries(dir))
-                {
-                    if (Directory.Exists(fi))
+                Parallel.ForEach(
+                    Directory.GetFileSystemEntries(dir),
+                    fi =>
                     {
-                        lock (tasklock)
                         {
-                            counter.UpdateFolderCount(1);
-                        }
-                        tasks.Add(Task.Run(() => ParallelDFS(fi, counter)));
-                    }
-                    if (File.Exists(fi))
-                    {
-                        FileInfo fileInfo = new FileInfo(fi);
-                        if (ImageExtensions.Contains(Path.GetExtension(fi).ToUpper()))
-                        {
-                            lock (tasklock)
+                            if (Directory.Exists(fi))
                             {
-                                counter.UpdateImageCount(1);
-                                counter.UpdateImageByteCount(fileInfo.Length);
+                                lock (tasklock)
+                                {
+                                    counter.UpdateFolderCount(1);
+                                }
+                                ParallelDFS(fi, counter);
+                            }
+                            if (File.Exists(fi))
+                            {
+                                FileInfo fileInfo = new FileInfo(fi);
+                                if (ImageExtensions.Contains(Path.GetExtension(fi).ToUpper()))
+                                {
+                                    lock (tasklock)
+                                    {
+                                        counter.UpdateImageCount(1);
+                                        counter.UpdateImageByteCount(fileInfo.Length);
+                                    }
+                                }
+                                lock (tasklock)
+                                {
+                                    counter.UpdateTotalBytesCount(fileInfo.Length);
+                                    counter.UpdateFileCount(1);
+                                }
                             }
                         }
-                        lock (tasklock)
-                        {
-                            counter.UpdateTotalBytesCount(fileInfo.Length);
-                            counter.UpdateFileCount(1);
-                        }
                     }
-                }
-                Task.WaitAll(tasks.ToArray());
+                );
             }
             catch (UnauthorizedAccessException)
             {
@@ -211,6 +231,11 @@ namespace Project1
                 total_bytes.ToString("N0")
             );
             GetImagePrintText();
+        }
+
+        public int getUnauth()
+        {
+            return unauthorized_count;
         }
 
         private void GetImagePrintText()
