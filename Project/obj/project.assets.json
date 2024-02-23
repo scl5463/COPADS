@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\scott\\OneDrive\\Desktop\\COPADS\\Project\\Project.csproj",
-      "projectName": "Project",
-      "projectPath": "C:\\Users\\scott\\OneDrive\\Desktop\\COPADS\\Project\\Project.csproj",
+      "projectUniqueName": "C:\\Users\\scott\\OneDrive\\Desktop\\COPADS\\Project\\du.csproj",
+      "projectName": "du",
+      "projectPath": "C:\\Users\\scott\\OneDrive\\Desktop\\COPADS\\Project\\du.csproj",
       "packagesPath": "C:\\Users\\scott\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\scott\\OneDrive\\Desktop\\COPADS\\Project\\obj\\",
       "projectStyle": "PackageReference",
