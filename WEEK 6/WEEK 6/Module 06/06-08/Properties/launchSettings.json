@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "06-08": {
+      "commandName": "Project",
+      "commandLineArgs": "127.0.0.1"
+    }
+  }
+}

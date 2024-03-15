@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp7.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>07-02</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>07-02</PackageId>
+    <LangVersion>8</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+</Project>

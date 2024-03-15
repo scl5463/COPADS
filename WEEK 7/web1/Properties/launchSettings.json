@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "web1": {
+      "commandName": "Project",
+      "commandLineArgs": "127.0.0.1",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:50877;http://localhost:50878"
+    }
+  }
+}
