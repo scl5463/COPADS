@@ -43,7 +43,6 @@ namespace project2
                 string option = args[1];
 
                 var bi = new BigInteger(getNumber(bits));
-                Console.WriteLine(bi);
                 // get primes
 
                 // get odds
