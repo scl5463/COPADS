@@ -43,8 +43,10 @@ namespace project2
                 string option = args[1];
 
                 var bi = new BigInteger(getNumber(bits));
-                // get primes
+                bi = BigInteger.Abs(bi); // no negative primes
+                // Console.WriteLine(bi.IsProbablyPrime(10));
 
+                // get primes
                 // get odds
             }
             catch
@@ -64,7 +66,7 @@ namespace project2
             }
             catch
             {
-                Console.WriteLine(error_message);
+                Console.WriteLine("bad bits, must be a number divisible by 8");
             }
             return true;
         }
@@ -93,9 +95,74 @@ namespace project2
 
     public static class BigIntegerExtensions
     {
-        public static bool IsProbablyPrime(this BigInteger value, int k = 10)
+        static BigInteger getRandomBigIntForPrimes(BigInteger max)
+        /**
+            gets random number between max and max-2
+            @param max - the bigint max
+            @return a - the bigint random number between max and max-2
+        */
         {
-            // put prime logic here
+            RandomNumberGenerator gen = RandomNumberGenerator.Create();
+            int a = (max - 2).ToByteArray().Length;
+            byte[] aSize = new byte[a];
+            gen.GetBytes(aSize);
+            BigInteger randomBigInt = new BigInteger(aSize);
+            randomBigInt = BigInteger.Abs(randomBigInt);
+            randomBigInt = (randomBigInt % (max - 2)) + 2;
+            return randomBigInt;
+        }
+
+        public static string IsProbablyPrime(this BigInteger n, int k = 10)
+        {
+            if (n <= 3)
+            {
+                return "probbaly prime";
+            }
+
+            // d = n-1 / 2^(r)
+            // mod until d%2 != 0 will give value of r and d
+            BigInteger d = n - 1;
+            BigInteger r = 0;
+            while (d % 2 == 0)
+            {
+                d /= 2;
+                r += 1;
+            }
+
+            int count = k;
+            while (count > 0)
+            {
+                count--;
+                BigInteger a = getRandomBigIntForPrimes(n);
+                BigInteger x = BigInteger.ModPow(a, d, n);
+
+                if (x == 1 || x == n - 1)
+                {
+                    continue;
+                }
+                if (!innerLoop(r, x, n))
+                {
+                    return "composite";
+                }
+            }
+            return "probably prime";
+        }
+
+        public static bool innerLoop(BigInteger r, BigInteger x, BigInteger n)
+        /**
+        I wrote this function because the psuedo code sucks and theres no way to break out
+        of a loop and continue that looks nice and i refuse to use goto since its bad practice
+        */
+        {
+            while (r > 1)
+            {
+                r--;
+                x = BigInteger.ModPow(x, 2, n);
+                if (x == n - 1)
+                {
+                    return true;
+                }
+            }
             return false;
         }
     }
