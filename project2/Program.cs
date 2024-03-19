@@ -200,16 +200,10 @@ namespace project2
     internal class Counter
     {
         public int primesFound = 0;
-        public int threadsSpawned = 0;
 
         public void UpdatePrimesFoundCount(int increment)
         {
             primesFound += increment;
-        }
-
-        public void addThread()
-        {
-            threadsSpawned += 1;
         }
     }
 }
