@@ -44,6 +44,7 @@ namespace project2
                     count = 1;
                 }
                 string bits = args[0];
+                Console.WriteLine($"BitLength:  {bits}  bits")
                 string option = args[1];
 
                 Counter counter = new Counter();
