@@ -1,5 +1,8 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Diagnostics;
+using System.Numerics;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace project2
 {
@@ -10,6 +13,7 @@ namespace project2
             + "     - bits - the number of bits of the number to be generated, must be a multiple of 8 and at least 32 bits.\n"
             + "     - option - 'odd' or 'prime' (the type of numbers to be generated)\n"
             + "     - count - the count of numbers to generate, defaults to 1.\n";
+        static object tasklock = new object();
 
         static void Main(string[] args)
         {
@@ -42,12 +46,37 @@ namespace project2
                 string bits = args[0];
                 string option = args[1];
 
-                var bi = new BigInteger(getNumber(bits));
-                bi = BigInteger.Abs(bi); // no negative primes
-                // Console.WriteLine(bi.IsProbablyPrime(10));
-
+                Counter counter = new Counter();
                 // get primes
+                if (option == "prime")
+                {
+                    var stopwatch = Stopwatch.StartNew();
+                    while (counter.primesFound != count)
+                    {
+                        Thread thread = new Thread(() =>
+                        {
+                            var bi = new BigInteger(getNumber(bits));
+                            bi = BigInteger.Abs(bi); // no negative primes
+                            if (bi.IsProbablyPrime() == "probably prime")
+                            {
+                                lock (tasklock)
+                                {
+                                    if (counter.primesFound < count)
+                                    {
+                                        counter.UpdatePrimesFoundCount(1);
+                                        Console.WriteLine($"{counter.primesFound}: {bi}\n");
+                                    }
+                                }
+                            }
+                        });
+                        thread.Start();
+                    }
+                    Console.WriteLine(
+                        $"Time to Generate: {stopwatch.Elapsed:hh\\:mm\\:ss\\.fffffff}"
+                    );
+                }
                 // get odds
+                if (option == "odd") { }
             }
             catch
             {
@@ -164,6 +193,22 @@ namespace project2
                 }
             }
             return false;
+        }
+    }
+
+    internal class Counter
+    {
+        public int primesFound = 0;
+        public int threadsSpawned = 0;
+
+        public void UpdatePrimesFoundCount(int increment)
+        {
+            primesFound += increment;
+        }
+
+        public void addThread()
+        {
+            threadsSpawned += 1;
         }
     }
 }
