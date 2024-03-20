@@ -49,22 +49,22 @@ namespace project2
 
                 Counter counter = new Counter();
                 // get primes
+                var stopwatch = Stopwatch.StartNew();
                 if (option == "prime")
                 {
-                    var stopwatch = Stopwatch.StartNew();
                     while (counter.primesFound != count)
                     {
                         Thread thread = new Thread(() =>
                         {
                             var bi = new BigInteger(getNumber(bits));
                             bi = BigInteger.Abs(bi); // no negative primes
-                            if (bi.IsProbablyPrime() == "probably prime")
+                            if (bi.isProbablyPrime() == "probably prime")
                             {
                                 lock (tasklock)
                                 {
                                     if (counter.primesFound < count)
                                     {
-                                        counter.UpdatePrimesFoundCount(1);
+                                        counter.updatePrimesFoundCount(1);
                                         Console.WriteLine($"{counter.primesFound}: {bi}\n");
                                     }
                                 }
@@ -72,20 +72,118 @@ namespace project2
                         });
                         thread.Start();
                     }
-                    Console.WriteLine(
-                        $"Time to Generate: {stopwatch.Elapsed:hh\\:mm\\:ss\\.fffffff}"
-                    );
                 }
                 // get odds
-                if (option == "odd") { }
+                if (option == "odd")
+                {
+                    getOdds(count, bits);
+                }
+                Console.WriteLine($"Time to Generate: {stopwatch.Elapsed:hh\\:mm\\:ss\\.fffffff}");
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 Console.WriteLine(error_message);
             }
         }
 
-        static void getOdds(int number, int count) { }
+        static BigInteger FindNumberOfPrimeFactors(BigInteger n)
+        {
+            List<BigInteger> factors = PrimeFactorization(n);
+
+            // if the list is empty then n is prime
+            if (factors.Count == 0)
+            {
+                return 2;
+            }
+
+            // total factors of
+            BigInteger totalFactorsCount = 1;
+            // number of consecutive primes ( 2, 2, 2, 3,... etc)
+            BigInteger count = 1;
+
+            // we started the counts at 1 because we need to start our for loop at index 1
+            BigInteger previousFactor = factors[0];
+
+            // for each index
+            // if it is same factor (ex:(2,2)) increment the count
+            // otherwise (totalFactors = totalFactors x count+1) and we get the new count of new prime
+            // get the count of the final factor and return the total count
+            for (int i = 1; i < factors.Count; i++)
+            {
+                if (factors[i] == previousFactor)
+                {
+                    count++;
+                }
+                else
+                {
+                    totalFactorsCount *= (count + 1);
+                    previousFactor = factors[i];
+                    count = 1;
+                }
+            }
+            totalFactorsCount *= (count + 1);
+            return totalFactorsCount;
+        }
+
+        static List<BigInteger> PrimeFactorization(BigInteger n)
+        /**
+            this is just standard prime factorization, we start at 3 because we ensure that the number
+            is odd before putting it into this method.
+        */
+        {
+            List<BigInteger> factors = new List<BigInteger>();
+
+            BigInteger bigNumber = n;
+            if (bigNumber.isProbablyPrime() == "probably prime")
+            {
+                return factors;
+            }
+            for (BigInteger i = 3; i * i <= n; i += 2)
+            {
+                while (bigNumber % i == 0 && i.isProbablyPrime() == "probably prime")
+                {
+                    factors.Add(i);
+                    bigNumber /= i;
+                    if (bigNumber.isProbablyPrime() == "probably prime")
+                    {
+                        return factors;
+                    }
+                }
+            }
+
+            return factors;
+        }
+
+        static void getOdds(int count, string bits)
+        {
+            List<BigInteger> bigIntPrimeFactors = new List<BigInteger>();
+            Counter counter = new Counter();
+
+            Parallel.For(
+                0,
+                count,
+                i =>
+                {
+                    // get non-negative odd number
+                    var bi = new BigInteger(getNumber(bits));
+                    bi = BigInteger.Abs(bi);
+
+                    if (bi % 2 == 0)
+                    {
+                        bi -= 1;
+                    }
+
+                    BigInteger numberFactors = FindNumberOfPrimeFactors(bi);
+                    lock (counter)
+                    {
+                        counter.updateOddsCompleted(1);
+                        Console.WriteLine($"{counter.oddsCompleted}: {bi}");
+                        Console.WriteLine($"Number of factors: {numberFactors}");
+                    }
+                }
+            );
+        }
 
         static bool validBits(string bits)
         {
@@ -142,11 +240,11 @@ namespace project2
             return randomBigInt;
         }
 
-        public static string IsProbablyPrime(this BigInteger n, int k = 10)
+        public static string isProbablyPrime(this BigInteger n, int k = 10)
         {
             if (n <= 3)
             {
-                return "probbaly prime";
+                return "probably prime";
             }
 
             // d = n-1 / 2^(r)
@@ -200,10 +298,16 @@ namespace project2
     internal class Counter
     {
         public int primesFound = 0;
+        public int oddsCompleted = 0;
 
-        public void UpdatePrimesFoundCount(int increment)
+        public void updatePrimesFoundCount(int increment)
         {
             primesFound += increment;
+        }
+
+        public void updateOddsCompleted(int increment)
+        {
+            oddsCompleted += increment;
         }
     }
 }
