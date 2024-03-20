@@ -86,23 +86,24 @@ namespace project2
 
             while (counter.primesFound != count)
             {
-                Thread thread = new Thread(() =>
-                {
-                    var bi = new BigInteger(getNumber(bits));
-                    bi = BigInteger.Abs(bi); // no negative primes
-                    if (bi.isProbablyPrime() == "probably prime")
+                ThreadPool.QueueUserWorkItem(
+                    (state) =>
                     {
-                        lock (counter)
+                        var bi = new BigInteger(getNumber(bits));
+                        bi = BigInteger.Abs(bi); // no negative primes
+                        if (bi.isProbablyPrime() == "probably prime")
                         {
                             if (counter.primesFound < count)
                             {
-                                counter.updatePrimesFoundCount(1);
-                                Console.WriteLine($"{counter.primesFound}: {bi}\n");
+                                lock (counter)
+                                {
+                                    counter.updatePrimesFoundCount(1);
+                                    Console.WriteLine($"{counter.primesFound}: {bi}\n");
+                                }
                             }
                         }
                     }
-                });
-                thread.Start();
+                );
             }
         }
 
