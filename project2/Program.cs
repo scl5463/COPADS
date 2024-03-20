@@ -60,9 +60,8 @@ namespace project2
                 }
                 Console.WriteLine($"Time to Generate: {stopwatch.Elapsed:hh\\:mm\\:ss\\.fffffff}");
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex);
                 Console.WriteLine(error_message);
             }
         }
