@@ -13,7 +13,6 @@ namespace project2
             + "     - bits - the number of bits of the number to be generated, must be a multiple of 8 and at least 32 bits.\n"
             + "     - option - 'odd' or 'prime' (the type of numbers to be generated)\n"
             + "     - count - the count of numbers to generate, defaults to 1.\n";
-        static object tasklock = new object();
 
         static void Main(string[] args)
         {
@@ -148,7 +147,7 @@ namespace project2
                     bi = BigInteger.Abs(bi); // no negative primes
                     if (bi.isProbablyPrime() == "probably prime")
                     {
-                        lock (tasklock)
+                        lock (counter)
                         {
                             if (counter.primesFound < count)
                             {
