@@ -4,6 +4,10 @@ using System.Numerics;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
+/**
+Code by Scott LoPinto
+Method Descriptions by ChatGPT and Scott LoPinto
+*/
 namespace project2
 {
     internal class Program
@@ -15,6 +19,11 @@ namespace project2
             + "     - count - the count of numbers to generate, defaults to 1.\n";
 
         static void Main(string[] args)
+        /**
+        This method is the entry point of the program. It parses command-line arguments to determine
+        the number of bits, type of numbers (prime or odd), and count of numbers to generate.
+        Then, it invokes the appropriate method (getPrimes or getOdds) based on the specified option.
+        */
         {
             int count;
             try
@@ -67,6 +76,11 @@ namespace project2
         }
 
         static BigInteger FindNumberOfPrimeFactors(BigInteger n)
+        /**
+        This method calculates the total number of prime factors for a given BigInteger n.
+        It uses prime factorization to find all prime factors of n and then calculates the total count
+        of unique prime factors.
+        */
         {
             List<BigInteger> factors = PrimeFactorization(n);
 
@@ -135,6 +149,11 @@ namespace project2
         }
 
         static void getPrimes(int count, string bits)
+        /**
+        This method generates a specified count of prime numbers with the specified number of bits.
+        It uses multithreading to find prime numbers concurrently and ensures thread safety when
+        updating the count of prime numbers found.
+        */
         {
             Counter counter = new Counter();
 
@@ -194,6 +213,10 @@ namespace project2
         }
 
         static bool validBits(string bits)
+        /**
+        This method validates the input string bits to ensure it
+        represents a valid number of bits (a multiple of 8 and at least 32 bits).
+        */
         {
             try
             {
@@ -208,16 +231,28 @@ namespace project2
         }
 
         static bool validOption(string option)
+        /**
+        This method validates the input string option to ensure it
+        represents a valid option ('prime' or 'odd').
+        */
         {
             return option == "prime" || option == "odd";
         }
 
         static Boolean validCount(string option)
+        /**
+        This method validates the input string option to ensure it
+        represents a valid count (an integer).
+        */
         {
             return int.TryParse(option, out int result);
         }
 
         static byte[] getNumber(string bits)
+        /**
+        This method generates a random byte array
+        representing a number with the specified number of bits.
+        */
         {
             int numberBytes = int.Parse(bits) / 8;
             byte[] randomBytes = new byte[numberBytes];
@@ -304,6 +339,10 @@ namespace project2
     }
 
     internal class Counter
+    /**
+    Counter class for use in threading and keeping track of the number of primes found
+    and odd numbers factored
+    */
     {
         public int primesFound = 0;
         public int oddsCompleted = 0;
