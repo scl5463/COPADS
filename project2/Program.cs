@@ -52,26 +52,7 @@ namespace project2
                 var stopwatch = Stopwatch.StartNew();
                 if (option == "prime")
                 {
-                    while (counter.primesFound != count)
-                    {
-                        Thread thread = new Thread(() =>
-                        {
-                            var bi = new BigInteger(getNumber(bits));
-                            bi = BigInteger.Abs(bi); // no negative primes
-                            if (bi.isProbablyPrime() == "probably prime")
-                            {
-                                lock (tasklock)
-                                {
-                                    if (counter.primesFound < count)
-                                    {
-                                        counter.updatePrimesFoundCount(1);
-                                        Console.WriteLine($"{counter.primesFound}: {bi}\n");
-                                    }
-                                }
-                            }
-                        });
-                        thread.Start();
-                    }
+                    getPrimes(count, bits);
                 }
                 // get odds
                 if (option == "odd")
@@ -155,7 +136,36 @@ namespace project2
             return factors;
         }
 
+        static void getPrimes(int count, string bits)
+        {
+            Counter counter = new Counter();
+
+            while (counter.primesFound != count)
+            {
+                Thread thread = new Thread(() =>
+                {
+                    var bi = new BigInteger(getNumber(bits));
+                    bi = BigInteger.Abs(bi); // no negative primes
+                    if (bi.isProbablyPrime() == "probably prime")
+                    {
+                        lock (tasklock)
+                        {
+                            if (counter.primesFound < count)
+                            {
+                                counter.updatePrimesFoundCount(1);
+                                Console.WriteLine($"{counter.primesFound}: {bi}\n");
+                            }
+                        }
+                    }
+                });
+                thread.Start();
+            }
+        }
+
         static void getOdds(int count, string bits)
+        /**
+            method takes care of odd factorization, takes in the count and bits and does the rest
+        */
         {
             List<BigInteger> bigIntPrimeFactors = new List<BigInteger>();
             Counter counter = new Counter();
