@@ -6,13 +6,13 @@ namespace project3
     {
         private static readonly HttpClient client = new HttpClient();
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             try
             {
                 if (BrokerAndValidator.valid_argument(args))
                 {
-                    BrokerAndValidator.start_class(args, client);
+                    await BrokerAndValidator.process_argument(args, client);
                 }
             }
             catch
@@ -24,15 +24,59 @@ namespace project3
 
     internal class BrokerAndValidator
     {
-        public static void start_class(string[] args, HttpClient client)
+        static async Task getKey(string email, HttpClient client)
+        {
+            Console.WriteLine($"{email}");
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(
+                    $"http://voyager.cs.rit.edu:5050/Key/{email}"
+                );
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    if (string.IsNullOrEmpty(responseBody))
+                    {
+                        Console.WriteLine("Empty response body");
+                    }
+                    else
+                    {
+                        Console.WriteLine(responseBody);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to fetch data. Status code: {response.StatusCode}");
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+            }
+        }
+
+        public static async Task process_argument(string[] args, HttpClient client)
         {
             try
             {
-                Console.WriteLine("starting class");
+                switch (args[0])
+                {
+                    case "keyGen":
+                    case "sendKey":
+                    case "sendMsg":
+                    case "getMsg":
+                        break;
+                    case "getKey":
+                        await getKey(args[1], client);
+                        break;
+                    default:
+                        break;
+                }
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error in the start class");
+                Console.WriteLine(e);
             }
         }
 
