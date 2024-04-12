@@ -74,6 +74,11 @@ namespace project3
             }
         }
 
+        public static void keyGen(int bits)
+        {
+            Console.WriteLine($"keyGen, {bits}");
+        }
+
         public static async Task process_argument(string[] args, HttpClient client)
         {
             try
@@ -81,6 +86,8 @@ namespace project3
                 switch (args[0])
                 {
                     case "keyGen":
+                        keyGen(int.Parse(args[1]));
+                        break;
                     case "sendKey":
                     case "sendMsg":
                     case "getMsg":
