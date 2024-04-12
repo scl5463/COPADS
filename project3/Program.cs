@@ -1,4 +1,8 @@
 ﻿using System.Net.Http;
+using System.Numerics;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
 
 namespace project3
 {
@@ -41,6 +45,59 @@ namespace project3
             Console.WriteLine(errorMessage);
         }
 
+        static async Task sendKey(string email, HttpClient client)
+        {
+            Console.WriteLine($"{email}");
+
+            try
+            {
+                string publicKeyJson = File.ReadAllText("public.key");
+                var publicJson = JsonSerializer.Deserialize<PublicKeyContent>(publicKeyJson);
+                string publicKey = publicJson?.key ?? "";
+
+                var content = new StringContent(
+                    JsonSerializer.Serialize(new { email = email, key = publicKey }),
+                    Encoding.UTF8,
+                    "application/json"
+                );
+                HttpResponseMessage response = await client.PutAsync(
+                    $"http://voyager.cs.rit.edu:5050/Key/{email}",
+                    content
+                );
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    {
+                        string privateKeyJson = File.ReadAllText("private.key");
+
+                        var privateJson = JsonSerializer.Deserialize<PrivateKeyContent>(
+                            privateKeyJson
+                        );
+                        string[] updatedEmailArray = new string[privateJson.email.Length + 1];
+
+                        // Copy elements from the original array to the new array
+                        Array.Copy(privateJson.email, updatedEmailArray, privateJson.email.Length);
+
+                        // Add the new email to the last index of the new array
+                        updatedEmailArray[privateJson.email.Length] = email;
+
+                        // Assign the new array back to the object
+                        privateJson.email = updatedEmailArray;
+
+                        string updatedPrivateKeyJson = JsonSerializer.Serialize(privateJson);
+
+                        // Write the updated private key to file
+                        File.WriteAllText("private.key", updatedPrivateKeyJson);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                PrintErrorMessage();
+            }
+        }
+
         static async Task getKey(string email, HttpClient client)
         {
             Console.WriteLine($"{email}");
@@ -59,7 +116,7 @@ namespace project3
                     else
                     {
                         File.WriteAllText($"{email}.key", responseBody);
-                        Console.WriteLine("Key has been written to key.txt");
+                        Console.WriteLine($"Key has been written to {email}.key");
                     }
                 }
                 else
@@ -74,9 +131,63 @@ namespace project3
             }
         }
 
+        static string FormatKey(BigInteger E, BigInteger N)
+        {
+            // Convert E and N to byte arrays (little endian)
+            byte[] eBytes = E.ToByteArray();
+            byte[] nBytes = N.ToByteArray();
+
+            // Calculate the size of E and N in bytes
+            int eSize = eBytes.Length;
+            int nSize = nBytes.Length;
+
+            // Convert the sizes to big endian byte arrays (4 bytes each)
+            byte[] eSizeBytes = BitConverter.GetBytes(eSize);
+            byte[] nSizeBytes = BitConverter.GetBytes(nSize);
+
+            // Reverse the byte arrays if needed to store them as big endian
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(eSizeBytes);
+                Array.Reverse(nSizeBytes);
+            }
+
+            // Concatenate the formatted bytes
+            byte[] formattedBytes = new byte[8 + eSize + nSize];
+            Buffer.BlockCopy(eSizeBytes, 0, formattedBytes, 0, 4);
+            Buffer.BlockCopy(nSizeBytes, 0, formattedBytes, 4, 4);
+            Buffer.BlockCopy(eBytes, 0, formattedBytes, 8, eSize);
+            Buffer.BlockCopy(nBytes, 0, formattedBytes, 8 + eSize, nSize);
+
+            // Convert the byte array to a base64-encoded string
+            string base64Key = Convert.ToBase64String(formattedBytes);
+
+            return base64Key;
+        }
+
         public static void keyGen(int bits)
         {
             Console.WriteLine($"keyGen, {bits}");
+            int pBits = (int)(bits / 2 + bits * .2);
+            int qBits = bits - pBits;
+
+            BigInteger p = BigIntegerExtensions.getPrimes(pBits);
+            BigInteger q = BigIntegerExtensions.getPrimes(qBits);
+
+            BigInteger N = p * q;
+            BigInteger T = (p - 1) * (q - 1);
+            BigInteger E = 65536;
+            BigInteger D = BigIntegerExtensions.modInverse(E, T);
+
+            var publicKey = FormatKey(E, N);
+            var publicJson = new { email = "", key = publicKey };
+            string publicKeyJson = JsonSerializer.Serialize(publicJson);
+            File.WriteAllText("public.key", publicKeyJson);
+
+            var privateKey = FormatKey(D, N);
+            var privateJson = new { email = new string[] { }, key = privateKey };
+            string privateKeyJson = JsonSerializer.Serialize(privateJson);
+            File.WriteAllText("private.key", privateKeyJson);
         }
 
         public static async Task process_argument(string[] args, HttpClient client)
@@ -89,6 +200,8 @@ namespace project3
                         keyGen(int.Parse(args[1]));
                         break;
                     case "sendKey":
+                        await sendKey(args[1], client);
+                        break;
                     case "sendMsg":
                     case "getMsg":
                         break;
@@ -133,4 +246,153 @@ namespace project3
             }
         }
     }
+
+    public static class BigIntegerExtensions
+    {
+        public static BigInteger modInverse(BigInteger a, BigInteger b)
+        {
+            BigInteger i = b,
+                v = 0,
+                d = 1;
+            while (a > 0)
+            {
+                BigInteger z = i / a,
+                    x = a;
+                a = i % x;
+                i = x;
+                x = d;
+                d = v - z * x;
+                v = x;
+            }
+            v %= b;
+            if (v < 0)
+                v = (v + b) % b;
+            return v;
+        }
+
+        static byte[] getNumber(int bits)
+        /**
+        This method generates a random byte array
+        representing a number with the specified number of bits.
+        */
+        {
+            int numberBytes = bits / 8;
+            byte[] randomBytes = new byte[numberBytes];
+            RandomNumberGenerator generator = RandomNumberGenerator.Create();
+
+            generator.GetBytes(randomBytes);
+
+            return randomBytes;
+        }
+
+        public static BigInteger getPrimes(int bits)
+        /**
+        This method generates a specified count of prime numbers with the specified number of bits.
+        It uses multithreading to find prime numbers concurrently and ensures thread safety when
+        updating the count of prime numbers found.
+        */
+        {
+            BigInteger prime = 2;
+            bool flag = true;
+            while (flag)
+            {
+                ThreadPool.QueueUserWorkItem(
+                    (state) =>
+                    {
+                        var bi = new BigInteger(getNumber(bits));
+                        bi = BigInteger.Abs(bi); // no negative primes
+                        if (bi.isProbablyPrime() == "probably prime")
+                        {
+                            prime = bi;
+                            flag = false;
+                        }
+                    }
+                );
+            }
+            return prime;
+        }
+
+        static BigInteger getRandomBigIntForPrimes(BigInteger max)
+        /**
+            gets random number between max and max-2
+            @param max - the bigint max
+            @return a - the bigint random number between max and max-2
+        */
+        {
+            RandomNumberGenerator gen = RandomNumberGenerator.Create();
+            int a = (max - 2).ToByteArray().Length;
+            byte[] aSize = new byte[a];
+            gen.GetBytes(aSize);
+            BigInteger randomBigInt = new BigInteger(aSize);
+            randomBigInt = BigInteger.Abs(randomBigInt);
+            randomBigInt = (randomBigInt % (max - 2)) + 2;
+            return randomBigInt;
+        }
+
+        public static string isProbablyPrime(this BigInteger n, int k = 10)
+        {
+            if (n <= 3)
+            {
+                return "probably prime";
+            }
+
+            // d = n-1 / 2^(r)
+            // mod until d%2 != 0 will give value of r and d
+            BigInteger d = n - 1;
+            BigInteger r = 0;
+            while (d % 2 == 0)
+            {
+                d /= 2;
+                r += 1;
+            }
+
+            int count = k;
+            while (count > 0)
+            {
+                count--;
+                BigInteger a = getRandomBigIntForPrimes(n);
+                BigInteger x = BigInteger.ModPow(a, d, n);
+
+                if (x == 1 || x == n - 1)
+                {
+                    continue;
+                }
+                if (!innerLoop(r, x, n))
+                {
+                    return "composite";
+                }
+            }
+            return "probably prime";
+        }
+
+        public static bool innerLoop(BigInteger r, BigInteger x, BigInteger n)
+        /**
+        I wrote this function because the psuedo code sucks and theres no way to break out
+        of a loop and continue that looks nice and i refuse to use goto since its bad practice
+        */
+        {
+            while (r > 1)
+            {
+                r--;
+                x = BigInteger.ModPow(x, 2, n);
+                if (x == n - 1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+}
+
+public class PublicKeyContent
+{
+    public string? email { get; set; }
+    public string? key { get; set; }
+}
+
+public class PrivateKeyContent
+{
+    public string[]? email { get; set; }
+    public string? key { get; set; }
 }
