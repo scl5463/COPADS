@@ -73,21 +73,37 @@ namespace project3
                         var privateJson = JsonSerializer.Deserialize<PrivateKeyContent>(
                             privateKeyJson
                         );
-                        string[] updatedEmailArray = new string[privateJson.email.Length + 1];
+                        bool emailExists = false;
+                        foreach (string existingEmail in privateJson.email)
+                        {
+                            if (existingEmail == email)
+                            {
+                                emailExists = true;
+                                break;
+                            }
+                        }
+                        if (!emailExists)
+                        {
+                            string[] updatedEmailArray = new string[privateJson.email.Length + 1];
 
-                        // Copy elements from the original array to the new array
-                        Array.Copy(privateJson.email, updatedEmailArray, privateJson.email.Length);
+                            // Copy elements from the original array to the new array
+                            Array.Copy(
+                                privateJson.email,
+                                updatedEmailArray,
+                                privateJson.email.Length
+                            );
 
-                        // Add the new email to the last index of the new array
-                        updatedEmailArray[privateJson.email.Length] = email;
+                            // Add the new email to the last index of the new array
+                            updatedEmailArray[privateJson.email.Length] = email;
 
-                        // Assign the new array back to the object
-                        privateJson.email = updatedEmailArray;
+                            // Assign the new array back to the object
+                            privateJson.email = updatedEmailArray;
 
-                        string updatedPrivateKeyJson = JsonSerializer.Serialize(privateJson);
+                            string updatedPrivateKeyJson = JsonSerializer.Serialize(privateJson);
 
-                        // Write the updated private key to file
-                        File.WriteAllText("private.key", updatedPrivateKeyJson);
+                            // Write the updated private key to file
+                            File.WriteAllText("private.key", updatedPrivateKeyJson);
+                        }
                     }
                 }
             }
