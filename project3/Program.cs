@@ -48,7 +48,6 @@ namespace project3
 
         static async Task sendKey(string email, HttpClient client)
         {
-            Console.WriteLine($"{email}");
             try
             {
                 string publicKeyJson = File.ReadAllText("public.key");
@@ -56,20 +55,19 @@ namespace project3
                 string publicKey = publicJson?.key ?? "";
                 var content = new StringContent(
                     JsonSerializer.Serialize(
-                        new PublicKeyContent { email = email, key = publicKey }
+                        new PublicKeyContent { email = "scl5463@rit.edu", key = publicKey }
                     ),
                     Encoding.UTF8,
                     "application/json"
                 );
+
                 HttpResponseMessage response = await client.PutAsync(
                     $"http://voyager.cs.rit.edu:5050/Key/{email}",
                     content
                 );
-                Console.WriteLine(await response.Content.ReadAsStringAsync());
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("bananas");
-                    string responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("Key Saved");
                     {
                         string privateKeyJson = File.ReadAllText("private.key");
 
@@ -109,9 +107,8 @@ namespace project3
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex);
                 PrintErrorMessage();
             }
         }
@@ -135,6 +132,7 @@ namespace project3
                 Array.Reverse(dBytes);
             }
             int dLength = BitConverter.ToInt32(dBytes, 0);
+
             DBytes = new byte[dLength];
             Buffer.BlockCopy(formattedBytes, 4, DBytes, 0, dLength);
 
@@ -201,14 +199,10 @@ namespace project3
         public static void getMessageFromJson(string json, BigInteger D, BigInteger N)
         {
             dynamic apples = JsonSerializer.Deserialize<PublicMessageContent>(json);
-            Console.WriteLine(apples.content);
             byte[] keyBytes = Convert.FromBase64String(apples.content);
             BigInteger encryptedMessage = new BigInteger(keyBytes);
-            Console.WriteLine(encryptedMessage);
-            Console.WriteLine("encrypted bigint: {0}\n", encryptedMessage);
 
             BigInteger decryptedMessage = BigInteger.ModPow(encryptedMessage, D, N);
-            Console.WriteLine("Decrypted bigint: {0}\n", decryptedMessage);
             byte[] messageBytes = decryptedMessage.ToByteArray();
             Console.WriteLine(Encoding.UTF8.GetString(messageBytes));
         }
@@ -229,14 +223,13 @@ namespace project3
                     }
                     else
                     {
-                        // dont forget to make this conditional
                         if (has_private_key_email(email))
                         {
                             string privateKeyJson = File.ReadAllText("private.key");
                             var privateJson = JsonSerializer.Deserialize<PrivateKeyContent>(
                                 privateKeyJson
                             );
-                            byte[] bytes = Convert.FromBase64String(privateJson.key); // Decode Base64 string to byte array
+                            byte[] bytes = Convert.FromBase64String(privateJson.key);
                             BigInteger D,
                                 N;
 
@@ -254,20 +247,17 @@ namespace project3
                 }
                 else
                 {
-                    Console.WriteLine($"Failed to fetch data. Status code: {response.StatusCode}");
                     PrintErrorMessage();
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.Write(ex);
                 PrintErrorMessage();
             }
         }
 
         static async Task getKey(string email, HttpClient client)
         {
-            Console.WriteLine($"{email}");
             try
             {
                 HttpResponseMessage response = await client.GetAsync(
@@ -315,8 +305,11 @@ namespace project3
 
             byte[] formattedBytes = new byte[8 + eSize + nSize];
             Buffer.BlockCopy(eSizeBytes, 0, formattedBytes, 0, 4);
+
             Buffer.BlockCopy(eBytes, 0, formattedBytes, 4, eSize);
+
             Buffer.BlockCopy(nSizeBytes, 0, formattedBytes, eSize + 4, 4);
+
             Buffer.BlockCopy(nBytes, 0, formattedBytes, 8 + eSize, nSize);
 
             string base64Key = Convert.ToBase64String(formattedBytes);
@@ -338,12 +331,12 @@ namespace project3
             BigInteger D = BigIntegerExtensions.modInverse(E, T);
 
             var publicKey = formatKey(E, N);
+
             var publicJson = new PublicKeyContent { email = "", key = publicKey };
             string publicKeyJson = JsonSerializer.Serialize(publicJson);
             File.WriteAllText("public.key", publicKeyJson);
 
             var privateKey = formatKey(D, N);
-            Console.WriteLine("D: {0}, N: {1}", D, N);
 
             var privateJson = new PrivateKeyContent { email = new string[] { }, key = privateKey };
             string privateKeyJson = JsonSerializer.Serialize(privateJson);
@@ -370,9 +363,14 @@ namespace project3
                     BigInteger encodedMessage = BigInteger.ModPow(encryptedMessage, E, N);
                     byte[] encodedBytes = encodedMessage.ToByteArray();
                     string encodedString = Convert.ToBase64String(encodedBytes);
+
                     var content = new StringContent(
                         JsonSerializer.Serialize(
-                            new PublicMessageContent { email = email, content = encodedString }
+                            new PublicMessageContent
+                            {
+                                email = "scl5463@rit.edu",
+                                content = encodedString
+                            }
                         ),
                         Encoding.UTF8,
                         "application/json"
@@ -381,22 +379,24 @@ namespace project3
                         $"http://voyager.cs.rit.edu:5050/Message/{email}",
                         content
                     );
-                    Console.WriteLine(await response.Content.ReadAsStringAsync());
 
                     if (response.IsSuccessStatusCode)
                     {
-                        Console.WriteLine("yes");
+                        Console.WriteLine("Message Written");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to Get Msg from {email}");
                     }
                 }
                 else
                 {
-                    PrintErrorMessage();
+                    Console.WriteLine($"Key  does  not  exist  for  {email}");
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 PrintErrorMessage();
-                Console.WriteLine(ex);
             }
         }
 
