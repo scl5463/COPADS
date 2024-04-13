@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
@@ -48,15 +49,15 @@ namespace project3
         static async Task sendKey(string email, HttpClient client)
         {
             Console.WriteLine($"{email}");
-
             try
             {
                 string publicKeyJson = File.ReadAllText("public.key");
                 var publicJson = JsonSerializer.Deserialize<PublicKeyContent>(publicKeyJson);
                 string publicKey = publicJson?.key ?? "";
-
                 var content = new StringContent(
-                    JsonSerializer.Serialize(new { email = email, key = publicKey }),
+                    JsonSerializer.Serialize(
+                        new PublicKeyContent { email = email, key = publicKey }
+                    ),
                     Encoding.UTF8,
                     "application/json"
                 );
@@ -64,8 +65,10 @@ namespace project3
                     $"http://voyager.cs.rit.edu:5050/Key/{email}",
                     content
                 );
+                Console.WriteLine(await response.Content.ReadAsStringAsync());
                 if (response.IsSuccessStatusCode)
                 {
+                    Console.WriteLine("bananas");
                     string responseBody = await response.Content.ReadAsStringAsync();
                     {
                         string privateKeyJson = File.ReadAllText("private.key");
@@ -85,7 +88,6 @@ namespace project3
                         if (!emailExists)
                         {
                             string[] updatedEmailArray = new string[privateJson.email.Length + 1];
-
                             // Copy elements from the original array to the new array
                             Array.Copy(
                                 privateJson.email,
@@ -110,6 +112,155 @@ namespace project3
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                PrintErrorMessage();
+            }
+        }
+
+        public static (BigInteger, BigInteger) getPrivateKeysFromJson(string json)
+        {
+            // Deserialize JSON string into a dynamic object
+            PrivateKeyContent jsonObj = JsonSerializer.Deserialize<PrivateKeyContent>(json);
+            // Decode base64-encoded key into byte array
+            byte[] formattedBytes = Convert.FromBase64String(jsonObj.key);
+
+            byte[] dBytes = new byte[4];
+            byte[] DBytes;
+            byte[] nBytes = new byte[4];
+            byte[] NBytes;
+
+            Buffer.BlockCopy(formattedBytes, 0, dBytes, 0, 4);
+
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(dBytes);
+            }
+            int dLength = BitConverter.ToInt32(dBytes, 0);
+            DBytes = new byte[dLength];
+            Buffer.BlockCopy(formattedBytes, 4, DBytes, 0, dLength);
+
+            Buffer.BlockCopy(formattedBytes, 4 + dLength, nBytes, 0, 4);
+
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(nBytes);
+            }
+
+            int nLength = BitConverter.ToInt32(nBytes, 0);
+            NBytes = new byte[nLength];
+
+            Buffer.BlockCopy(formattedBytes, 8 + dLength, NBytes, 0, nLength);
+
+            // Convert D and N to BigIntegers
+            BigInteger D = new BigInteger(DBytes);
+            BigInteger N = new BigInteger(NBytes);
+
+            return (D, N);
+        }
+
+        public static (BigInteger, BigInteger) getKeysFromJson(string json)
+        {
+            // Deserialize JSON string into a dynamic object
+            PublicKeyContent jsonObj = JsonSerializer.Deserialize<PublicKeyContent>(json);
+            // Decode base64-encoded key into byte array
+            byte[] formattedBytes = Convert.FromBase64String(jsonObj.key);
+
+            byte[] eBytes = new byte[4];
+            byte[] EBytes;
+            byte[] nBytes = new byte[4];
+            byte[] NBytes;
+
+            Buffer.BlockCopy(formattedBytes, 0, eBytes, 0, 4);
+
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(eBytes);
+            }
+            int eLength = BitConverter.ToInt32(eBytes, 0);
+            EBytes = new byte[eLength];
+            Buffer.BlockCopy(formattedBytes, 4, EBytes, 0, eLength);
+
+            Buffer.BlockCopy(formattedBytes, 4 + eLength, nBytes, 0, 4);
+
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(nBytes);
+            }
+
+            int nLength = BitConverter.ToInt32(nBytes, 0);
+            NBytes = new byte[nLength];
+
+            Buffer.BlockCopy(formattedBytes, 8 + eLength, NBytes, 0, nLength);
+
+            // Convert D and N to BigIntegers
+            BigInteger D = new BigInteger(EBytes);
+            BigInteger N = new BigInteger(NBytes);
+
+            return (D, N);
+        }
+
+        public static void getMessageFromJson(string json, BigInteger D, BigInteger N)
+        {
+            dynamic apples = JsonSerializer.Deserialize<PublicMessageContent>(json);
+            Console.WriteLine(apples.content);
+            byte[] keyBytes = Convert.FromBase64String(apples.content);
+            BigInteger encryptedMessage = new BigInteger(keyBytes);
+            Console.WriteLine(encryptedMessage);
+            Console.WriteLine("encrypted bigint: {0}\n", encryptedMessage);
+
+            BigInteger decryptedMessage = BigInteger.ModPow(encryptedMessage, D, N);
+            Console.WriteLine("Decrypted bigint: {0}\n", decryptedMessage);
+            byte[] messageBytes = decryptedMessage.ToByteArray();
+            Console.WriteLine(Encoding.UTF8.GetString(messageBytes));
+        }
+
+        static async Task getMsg(string email, HttpClient client)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(
+                    $"http://voyager.cs.rit.edu:5050/Message/{email}"
+                );
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    if (string.IsNullOrEmpty(responseBody))
+                    {
+                        Console.WriteLine("Empty response body");
+                    }
+                    else
+                    {
+                        // dont forget to make this conditional
+                        if (has_private_key_email(email))
+                        {
+                            string privateKeyJson = File.ReadAllText("private.key");
+                            var privateJson = JsonSerializer.Deserialize<PrivateKeyContent>(
+                                privateKeyJson
+                            );
+                            byte[] bytes = Convert.FromBase64String(privateJson.key); // Decode Base64 string to byte array
+                            BigInteger D,
+                                N;
+
+                            (D, N) = getPrivateKeysFromJson(privateKeyJson);
+                            getMessageFromJson(responseBody, D, N);
+                        }
+                        else
+                        {
+                            Console.WriteLine(
+                                "No private key for {0}. sendKey to them to put them on privateKey list",
+                                email
+                            );
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to fetch data. Status code: {response.StatusCode}");
+                    PrintErrorMessage();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
                 PrintErrorMessage();
             }
         }
@@ -147,44 +298,34 @@ namespace project3
             }
         }
 
-        static string FormatKey(BigInteger E, BigInteger N)
+        static string formatKey(BigInteger E, BigInteger N)
         {
-            // Convert E and N to byte arrays (little endian)
             byte[] eBytes = E.ToByteArray();
             byte[] nBytes = N.ToByteArray();
-
-            // Calculate the size of E and N in bytes
             int eSize = eBytes.Length;
             int nSize = nBytes.Length;
-
-            // Convert the sizes to big endian byte arrays (4 bytes each)
             byte[] eSizeBytes = BitConverter.GetBytes(eSize);
             byte[] nSizeBytes = BitConverter.GetBytes(nSize);
 
-            // Reverse the byte arrays if needed to store them as big endian
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(eSizeBytes);
                 Array.Reverse(nSizeBytes);
             }
 
-            // Concatenate the formatted bytes
             byte[] formattedBytes = new byte[8 + eSize + nSize];
             Buffer.BlockCopy(eSizeBytes, 0, formattedBytes, 0, 4);
-            Buffer.BlockCopy(nSizeBytes, 0, formattedBytes, 4, 4);
-            Buffer.BlockCopy(eBytes, 0, formattedBytes, 8, eSize);
+            Buffer.BlockCopy(eBytes, 0, formattedBytes, 4, eSize);
+            Buffer.BlockCopy(nSizeBytes, 0, formattedBytes, eSize + 4, 4);
             Buffer.BlockCopy(nBytes, 0, formattedBytes, 8 + eSize, nSize);
 
-            // Convert the byte array to a base64-encoded string
             string base64Key = Convert.ToBase64String(formattedBytes);
-
             return base64Key;
         }
 
         public static void keyGen(int bits)
         {
-            Console.WriteLine($"keyGen, {bits}");
-            int pBits = (int)(bits / 2 + bits * .2);
+            int pBits = (int)(bits / 2 + bits * .25);
             int qBits = bits - pBits;
 
             BigInteger p = BigIntegerExtensions.getPrimes(pBits);
@@ -193,17 +334,70 @@ namespace project3
             BigInteger N = p * q;
             BigInteger T = (p - 1) * (q - 1);
             BigInteger E = 65536;
+
             BigInteger D = BigIntegerExtensions.modInverse(E, T);
 
-            var publicKey = FormatKey(E, N);
-            var publicJson = new { email = "", key = publicKey };
+            var publicKey = formatKey(E, N);
+            var publicJson = new PublicKeyContent { email = "", key = publicKey };
             string publicKeyJson = JsonSerializer.Serialize(publicJson);
             File.WriteAllText("public.key", publicKeyJson);
 
-            var privateKey = FormatKey(D, N);
-            var privateJson = new { email = new string[] { }, key = privateKey };
+            var privateKey = formatKey(D, N);
+            Console.WriteLine("D: {0}, N: {1}", D, N);
+
+            var privateJson = new PrivateKeyContent { email = new string[] { }, key = privateKey };
             string privateKeyJson = JsonSerializer.Serialize(privateJson);
             File.WriteAllText("private.key", privateKeyJson);
+        }
+
+        static async Task sendMsg(string email, string message, HttpClient client)
+        {
+            try
+            {
+                if (has_public_key_email(email))
+                {
+                    string publicKeyJson = File.ReadAllText($"{email}.key");
+                    var publicJson = JsonSerializer.Deserialize<PublicKeyContent>(publicKeyJson);
+                    byte[] bytes = Convert.FromBase64String(publicJson.key);
+                    BigInteger E,
+                        N;
+
+                    (E, N) = getKeysFromJson(publicKeyJson);
+                    byte[] messageByteArray = Encoding.UTF8.GetBytes(message);
+                    BigInteger bigMessageInt = new BigInteger(messageByteArray);
+
+                    BigInteger encryptedMessage = bigMessageInt;
+                    BigInteger encodedMessage = BigInteger.ModPow(encryptedMessage, E, N);
+                    byte[] encodedBytes = encodedMessage.ToByteArray();
+                    string encodedString = Convert.ToBase64String(encodedBytes);
+                    var content = new StringContent(
+                        JsonSerializer.Serialize(
+                            new PublicMessageContent { email = email, content = encodedString }
+                        ),
+                        Encoding.UTF8,
+                        "application/json"
+                    );
+                    HttpResponseMessage response = await client.PutAsync(
+                        $"http://voyager.cs.rit.edu:5050/Message/{email}",
+                        content
+                    );
+                    Console.WriteLine(await response.Content.ReadAsStringAsync());
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("yes");
+                    }
+                }
+                else
+                {
+                    PrintErrorMessage();
+                }
+            }
+            catch (Exception ex)
+            {
+                PrintErrorMessage();
+                Console.WriteLine(ex);
+            }
         }
 
         public static async Task process_argument(string[] args, HttpClient client)
@@ -219,7 +413,10 @@ namespace project3
                         await sendKey(args[1], client);
                         break;
                     case "sendMsg":
+                        await sendMsg(args[1], args[2], client);
+                        break;
                     case "getMsg":
+                        await getMsg(args[1], client);
                         break;
                     case "getKey":
                         await getKey(args[1], client);
@@ -238,7 +435,7 @@ namespace project3
         {
             try
             {
-                if (args.Length != 2)
+                if (args.Length < 2 || args.Length > 3)
                 {
                     return false;
                 }
@@ -247,9 +444,11 @@ namespace project3
                 {
                     case "keyGen":
                         return int.TryParse(args[1], out _);
+                    case "sendMsg":
+                        return args.Length == 3;
                     case "sendKey":
                     case "getKey":
-                    case "sendMsg":
+
                     case "getMsg":
                         return args[1] is string;
                     default:
@@ -258,6 +457,35 @@ namespace project3
             }
             catch
             {
+                return false;
+            }
+        }
+
+        public static bool has_private_key_email(string email)
+        {
+            try
+            {
+                string privateKeyJson = File.ReadAllText("private.key");
+                var privateJson = JsonSerializer.Deserialize<PrivateKeyContent>(privateKeyJson);
+                return privateJson.email.Contains(email);
+            }
+            catch
+            {
+                PrintErrorMessage();
+                return false;
+            }
+        }
+
+        public static bool has_public_key_email(string email)
+        {
+            try
+            {
+                string filePath = $"{email}.key";
+                return File.Exists(filePath);
+            }
+            catch
+            {
+                PrintErrorMessage();
                 return false;
             }
         }
@@ -405,6 +633,12 @@ public class PublicKeyContent
 {
     public string? email { get; set; }
     public string? key { get; set; }
+}
+
+public class PublicMessageContent
+{
+    public string? email { get; set; }
+    public string? content { get; set; }
 }
 
 public class PrivateKeyContent
