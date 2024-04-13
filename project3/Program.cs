@@ -55,7 +55,7 @@ namespace project3
                 string publicKey = publicJson?.key ?? "";
                 var content = new StringContent(
                     JsonSerializer.Serialize(
-                        new PublicKeyContent { email = "scl5463@rit.edu", key = publicKey }
+                        new PublicKeyContent { email = email, key = publicKey }
                     ),
                     Encoding.UTF8,
                     "application/json"
@@ -65,6 +65,7 @@ namespace project3
                     $"http://voyager.cs.rit.edu:5050/Key/{email}",
                     content
                 );
+
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Key Saved");
@@ -105,6 +106,10 @@ namespace project3
                             File.WriteAllText("private.key", updatedPrivateKeyJson);
                         }
                     }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to send key");
                 }
             }
             catch
